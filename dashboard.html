@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Dashboard - Milk Chacha</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+<header>
+    <h1>🥛 Milk Chacha</h1>
+
+    <nav>
+        <a href="/">Home</a>
+        <a href="/products">Products</a>
+        <a href="/my-orders">My Orders</a>
+        <a href="/logout">Logout</a>
+    </nav>
+</header>
+
+
+<div class="hero">
+
+    <h2>Welcome, {{ name }}! 👋</h2>
+
+    <p>Welcome to your Milk Chacha Dashboard.</p>
+
+    <p>Email: {{ email }}</p>
+
+
+    <div style="margin-top: 25px;">
+
+        <a href="/products" class="btn">
+            🥛 Order Fresh Milk
+        </a>
+
+        <a href="/my-orders" class="btn">
+            📦 My Orders
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Orders - Milk Chacha</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+<header>
+    <h1>🥛 Milk Chacha</h1>
+
+    <nav>
+        <a href="/dashboard">Dashboard</a>
+        <a href="/products">Products</a>
+        <a href="/my-orders">My Orders</a>
+        <a href="/logout">Logout</a>
+    </nav>
+</header>
+
+<div class="hero">
+
+    <h2>My Orders 📦</h2>
+
+</div>
+
+<div class="products">
+
+    {% if orders %}
+
+        {% for order in orders %}
+
+        <div class="product-card">
+
+            <h3>{{ order.product_name }}</h3>
+
+            <p>Quantity: {{ order.quantity }}</p>
+
+            <p>Price: ₹{{ order.price }}</p>
+
+            <p>Order ID: #{{ order.id }}</p>
+
+            <p>{{ order.order_date }}</p>
+
+        </div>
+
+        {% endfor %}
+
+    {% else %}
+
+        <div class="product-card">
+
+            <h3>No Orders Yet</h3>
+
+            <p>You haven't placed any orders.</p>
+
+            <a href="/products" class="btn">
+                Order Now
+            </a>
+
+        </div>
+
+    {% endif %}
+
+</div>
+
+</body>
+</html>

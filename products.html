@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Products - Milk Chacha</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+<header>
+    <h1>🥛 Milk Chacha</h1>
+
+    <nav>
+        <a href="/dashboard">Dashboard</a>
+        <a href="/products">Products</a>
+        <a href="/logout">Logout</a>
+    </nav>
+</header>
+
+
+<div class="hero">
+
+    <h2>Our Fresh Products 🥛</h2>
+
+    <p>Choose fresh and quality dairy products.</p>
+
+</div>
+
+
+<div class="products">
+
+    <!-- Fresh Milk -->
+    <div class="product-card">
+
+        <h3>🥛 Fresh Milk</h3>
+
+        <p>Pure and fresh milk.</p>
+
+        <h4>₹60 / Liter</h4>
+
+        <a href="/order?product=Fresh%20Milk&price=60"
+           class="btn">
+            Order Now
+        </a>
+
+    </div>
+
+
+    <!-- Curd -->
+    <div class="product-card">
+
+        <h3>🥣 Curd</h3>
+
+        <p>Fresh and healthy curd.</p>
+
+        <h4>₹50 / Kg</h4>
+
+        <a href="/order?product=Curd&price=50"
+           class="btn">
+            Order Now
+        </a>
+
+    </div>
+
+
+    <!-- Paneer -->
+    <div class="product-card">
+
+        <h3>🧀 Paneer</h3>
+
+        <p>Fresh homemade-style paneer.</p>
+
+        <h4>₹300 / Kg</h4>
+
+        <a href="/order?product=Paneer&price=300"
+           class="btn">
+            Order Now
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+</html>
