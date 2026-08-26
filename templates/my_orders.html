@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Orders - Milk Chacha</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+<header>
+    <h1>🥛 Milk Chacha</h1>
+
+    <nav>
+        <a href="/dashboard">Dashboard</a>
+        <a href="/products">Products</a>
+        <a href="/my-orders">My Orders</a>
+        <a href="/logout">Logout</a>
+    </nav>
+</header>
+
+<div class="hero">
+
+    <h2>My Orders 📦</h2>
+
+</div>
+
+<div class="products">
+
+    {% if orders %}
+
+        {% set grand_total = namespace(value=0) %}
+
+        {% for order in orders %}
+
+        {% set item_total = order.quantity * order.price %}
+        {% set grand_total.value = grand_total.value + item_total %}
+
+        <div class="product-card">
+
+            <h3>{{ order.product_name }}</h3>
+
+            <p>Quantity: {{ order.quantity }}</p>
+
+            <p>Price: ₹{{ "%.2f"|format(order.price) }}</p>
+
+            <p>
+                <strong>
+                    Total: ₹{{ "%.2f"|format(item_total) }}
+                </strong>
+            </p>
+
+            <p>Order ID: #{{ order.id }}</p>
+
+            <p>{{ order.order_date }}</p>
+
+        </div>
+
+        {% endfor %}
+
+        <div class="product-card">
+
+            <h2>💰 Grand Total</h2>
+
+            <h2>
+                ₹{{ "%.2f"|format(grand_total.value) }}
+            </h2>
+
+        </div>
+
+    {% else %}
+
+        <div class="product-card">
+
+            <h3>No Orders Yet</h3>
+
+            <p>You haven't placed any orders.</p>
+
+            <a href="/products" class="btn">
+                Order Now
+            </a>
+
+        </div>
+
+    {% endif %}
+
+</div>
+
+</body>
+</html>
