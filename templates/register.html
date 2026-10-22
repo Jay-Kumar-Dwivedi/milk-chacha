@@ -9,41 +9,68 @@
 <body>
 
 <header>
-    <h1>🥛 Milk Chacha</h1>
+    <a href="/" class="logo">🥛 Milk Chacha</a>
+    <nav>
+        <a href="/login">Login</a>
+    </nav>
 </header>
 
-<div class="login-box">
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <div class="flash-container">
+      {% for category, message in messages %}
+        <div class="flash {{ category }}">
+          {% if category == 'error' %}⚠️{% elif category == 'success' %}✅{% endif %}
+          {{ message }}
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
 
-    <h2>Create Account</h2>
+<div class="auth-wrapper">
+    <div class="auth-card">
 
-    <form action="/register" method="POST">
+        <div class="brand">
+            <span class="brand-icon">🥛</span>
+            <div class="brand-title">Milk Chacha</div>
+            <div class="brand-sub">Join thousands of happy customers</div>
+        </div>
 
-        <input type="text"
-               name="full_name"
-               placeholder="Full Name"
-               required>
+        <h2>Create your account</h2>
 
-        <input type="email"
-               name="email"
-               placeholder="Email"
-               required>
+        <form action="/register" method="POST">
 
-        <input type="password"
-               name="password"
-               placeholder="Password"
-               required>
+            <div class="form-group">
+                <label for="full_name">Full Name</label>
+                <input type="text" id="full_name" name="full_name"
+                       placeholder="Ramesh Kumar" required autofocus>
+            </div>
 
-        <button type="submit">
-            Register
-        </button>
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email"
+                       placeholder="you@example.com" required>
+            </div>
 
-    </form>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password"
+                       placeholder="Create a strong password" required>
+                <div class="input-hint">🔒 Password is stored as a secure hash (bcrypt)</div>
+            </div>
 
-    <p>
-        Already have an account?
-        <a href="/login">Login</a>
-    </p>
+            <div class="form-submit">
+                <button type="submit" class="btn">Create Account →</button>
+            </div>
 
+        </form>
+
+        <div class="auth-footer">
+            Already have an account? <a href="/login">Sign in</a>
+        </div>
+
+    </div>
 </div>
 
 </body>

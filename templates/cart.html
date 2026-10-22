@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Cart - Milk Chacha</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<header>
+    <a href="/" class="logo">🥛 Milk Chacha</a>
+    <nav>
+        <a href="/dashboard">Dashboard</a>
+        <a href="/products">Products</a>
+        <a href="/cart" class="cart-link">
+            🛒 Cart
+            {% if cart_count > 0 %}
+                <span class="cart-badge">{{ cart_count }}</span>
+            {% endif %}
+        </a>
+        <a href="/my-orders">My Orders</a>
+        <a href="/logout" class="logout-link">Logout</a>
+    </nav>
+</header>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <div class="flash-container">
+      {% for category, message in messages %}
+        <div class="flash {{ category }}">
+          {% if category == 'error' %}⚠️{% elif category == 'success' %}✅{% endif %}
+          {{ message }}
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
+
+<div class="section-header">
+    <h2>🛒 My Cart</h2>
+    <p>Review your items before checkout</p>
+</div>
+
+<div class="cart-container">
+
+    {% if items %}
+
+        {% set grand_total = namespace(value=0) %}
+        {% set total_qty   = namespace(value=0) %}
+
+        {% for item in items %}
+            {% set item_total = item.quantity * item.price %}
+            {% set grand_total.value = grand_total.value + item_total %}
+            {% set total_qty.value   = total_qty.value + item.quantity %}
+
+            <div class="cart-item">
+
+                <div class="cart-item-icon">
+                    {% if 'Milk' in item.product_name %}🥛
+                    {% elif 'Buffalo' in item.product_name %}🐃
+                    {% elif 'Curd' in item.product_name %}🥣
+                    {% elif 'Paneer' in item.product_name %}🧀
+                    {% elif 'Butter' in item.product_name %}🧈
+                    {% elif 'Ghee' in item.product_name %}🍯
+                    {% elif 'Cream' in item.product_name %}🍦
+                    {% elif 'Lassi' in item.product_name %}🥛
+                    {% elif 'Buttermilk' in item.product_name %}🧃
+                    {% elif 'Mishti' in item.product_name %}🫙
+                    {% elif 'Khoya' in item.product_name or 'Mawa' in item.product_name %}🍮
+                    {% elif 'Rabri' in item.product_name %}🥧
+                    {% elif 'Chocolate' in item.product_name %}🍫
+                    {% else %}🧴{% endif %}
+                </div>
+
+                <div class="cart-item-info">
+                    <h3>{{ item.product_name }}</h3>
+                    <p>₹{{ "%.2f"|format(item.price) }} per unit</p>
+                </div>
+
+                <!-- Qty update form -->
+                <form action="/cart/update" method="POST" class="cart-qty-form">
+                    <input type="hidden" name="cart_id" value="{{ item.id }}">
+                    <input type="number" name="quantity"
+                           value="{{ item.quantity }}" min="0" max="99"
+                           onchange="this.form.submit()">
+                </form>
+
+                <div class="cart-item-total">
+                    ₹{{ "%.2f"|format(item_total) }}
+                </div>
+
+                <a href="/cart/remove/{{ item.id }}" class="btn btn-danger">🗑️</a>
+
+            </div>
+
+        {% endfor %}
+
+        <!-- Summary -->
+        <div class="cart-summary">
+            <div class="cart-summary-row">
+                <span>Total Items</span>
+                <span>{{ total_qty.value }}</span>
+            </div>
+            <div class="cart-summary-row">
+                <span>Products in Cart</span>
+                <span>{{ items|length }}</span>
+            </div>
+            <div class="cart-summary-row">
+                <span>💰 Grand Total</span>
+                <span>₹{{ "%.2f"|format(grand_total.value) }}</span>
+            </div>
+
+            <form action="/cart/checkout" method="POST">
+                <button type="submit" class="btn btn-success cart-checkout-btn">
+                    ✅ Place Order (₹{{ "%.2f"|format(grand_total.value) }})
+                </button>
+            </form>
+
+            <div style="text-align:center; margin-top:12px;">
+                <a href="/products" class="btn btn-outline" style="font-size:14px; padding:9px 20px;">
+                    ← Continue Shopping
+                </a>
+            </div>
+        </div>
+
+    {% else %}
+
+        <div class="empty-cart">
+            <div class="empty-icon">🛒</div>
+            <h3>Your cart is empty!</h3>
+            <p>Add some fresh dairy products to your cart.</p>
+            <a href="/products" class="btn">🥛 Browse Products</a>
+        </div>
+
+    {% endif %}
+
+</div>
+
+</body>
+</html>

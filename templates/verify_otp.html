@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify OTP - Milk Chacha</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<header>
+    <a href="/" class="logo">🥛 Milk Chacha</a>
+</header>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <div class="flash-container">
+      {% for category, message in messages %}
+        <div class="flash {{ category }}">
+          {% if category == 'otp' %}🔑{% elif category == 'error' %}⚠️{% elif category == 'success' %}✅{% endif %}
+          {{ message }}
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
+
+<div class="auth-wrapper">
+    <div class="auth-card">
+
+        <div class="brand">
+            <span class="brand-icon">🔐</span>
+            <div class="brand-title">OTP Verification</div>
+            <div class="brand-sub">Enter the 6-digit code to continue</div>
+        </div>
+
+        <h2>Enter your OTP</h2>
+
+        <form action="/verify-otp" method="POST">
+
+            <div class="form-group">
+                <label for="otp">6-Digit OTP Code</label>
+                <input type="text" id="otp" name="otp"
+                       class="otp-input"
+                       placeholder="● ● ● ● ● ●"
+                       maxlength="6"
+                       pattern="[0-9]{6}"
+                       inputmode="numeric"
+                       autocomplete="one-time-code"
+                       required autofocus>
+                <div class="input-hint">📨 OTP shown above (demo mode) — in production it is sent via email/SMS</div>
+            </div>
+
+            <div class="otp-timer" id="timer">⏳ OTP expires in <strong id="countdown">05:00</strong></div>
+
+            <div class="form-submit" style="margin-top:18px;">
+                <button type="submit" class="btn">✅ Verify OTP</button>
+            </div>
+
+        </form>
+
+        <div class="auth-footer">
+            Wrong account? <a href="/login">Back to Login</a>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    // Simple countdown timer
+    let seconds = 300;
+    const el = document.getElementById('countdown');
+    const interval = setInterval(() => {
+        seconds--;
+        const m = String(Math.floor(seconds / 60)).padStart(2, '0');
+        const s = String(seconds % 60).padStart(2, '0');
+        el.textContent = m + ':' + s;
+        if (seconds <= 0) {
+            clearInterval(interval);
+            el.textContent = 'Expired';
+            el.style.color = '#ea4335';
+        }
+    }, 1000);
+
+    // Auto-focus and only allow digits
+    document.getElementById('otp').addEventListener('input', function() {
+        this.value = this.value.replace(/\D/g, '').slice(0, 6);
+    });
+</script>
+
+</body>
+</html>

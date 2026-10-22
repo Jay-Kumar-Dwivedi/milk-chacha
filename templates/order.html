@@ -3,57 +3,76 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Place Order - Milk Chacha</title>
-
-    <link rel="stylesheet"
-          href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
-
 <body>
 
 <header>
-    <h1>🥛 Milk Chacha</h1>
-
+    <a href="/" class="logo">🥛 Milk Chacha</a>
     <nav>
         <a href="/dashboard">Dashboard</a>
         <a href="/products">Products</a>
-        <a href="/logout">Logout</a>
+        <a href="/logout" class="logout-link">Logout</a>
     </nav>
 </header>
 
-<div class="login-box">
+<div class="auth-wrapper">
+    <div class="auth-card" style="max-width:460px;">
 
-    <h2>Place Your Order</h2>
+        <div class="brand">
+            <span class="brand-icon">🛒</span>
+            <div class="brand-title">Place Your Order</div>
+            <div class="brand-sub">Fast, fresh & delivered to your door</div>
+        </div>
 
-    <form action="/order" method="POST">
+        <form action="/order" method="POST" id="orderForm">
 
-        <input type="text"
-               name="product_name"
-               value="{{ product }}"
-               readonly>
+            <div class="form-group">
+                <label>Product</label>
+                <input type="text" name="product_name"
+                       value="{{ product }}" readonly>
+            </div>
 
-        <input type="number"
-               name="quantity"
-               placeholder="Quantity"
-               min="1"
-               required>
-          <p id="total">
-             Total: ₹{{ price }}
-          </p>     
+            <div class="form-group">
+                <label for="quantity">Quantity</label>
+                <input type="number" id="quantity" name="quantity"
+                       placeholder="e.g. 2" min="1" required>
+            </div>
 
-        <input type="number"
-               name="price"
-               value="{{ price }}"
-               readonly>
+            <div class="form-group">
+                <label>Unit Price</label>
+                <input type="number" name="price"
+                       value="{{ price }}" readonly>
+            </div>
 
-        <button type="submit">
-            Place Order
-        </button>
+            <div class="total-preview" id="totalPreview">
+                Total: ₹{{ price }}
+            </div>
 
-    </form>
+            <div class="form-submit">
+                <button type="submit" class="btn btn-success">✅ Confirm Order</button>
+            </div>
 
+        </form>
+
+        <div class="auth-footer">
+            <a href="/products">← Back to Products</a>
+        </div>
+
+    </div>
 </div>
+
+<script>
+    const qtyInput  = document.getElementById('quantity');
+    const preview   = document.getElementById('totalPreview');
+    const unitPrice = parseFloat("{{ price }}");
+
+    qtyInput.addEventListener('input', function() {
+        const qty = parseInt(this.value) || 0;
+        preview.textContent = 'Total: ₹' + (qty * unitPrice).toLocaleString('en-IN');
+    });
+</script>
 
 </body>
 </html>

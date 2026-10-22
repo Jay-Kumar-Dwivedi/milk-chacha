@@ -3,46 +3,116 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Dashboard - Milk Chacha</title>
-
-    <link rel="stylesheet"
-          href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
-
 <body>
 
 <header>
-    <h1>🥛 Milk Chacha</h1>
-
+    <a href="/" class="logo">🥛 Milk Chacha</a>
     <nav>
-        <a href="/">Home</a>
         <a href="/products">Products</a>
+        <a href="/cart" class="cart-link">
+            🛒 Cart
+            {% if cart_count > 0 %}<span class="cart-badge">{{ cart_count }}</span>{% endif %}
+        </a>
         <a href="/my-orders">My Orders</a>
-        <a href="/logout">Logout</a>
+        <a href="/logout" class="logout-link">Logout</a>
     </nav>
 </header>
 
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <div class="flash-container">
+      {% for category, message in messages %}
+        <div class="flash {{ category }}">
+          {% if category == 'error' %}⚠️{% elif category == 'success' %}✅{% endif %}
+          {{ message }}
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
 
 <div class="hero">
+    <h2>Welcome back, {{ name }}! 👋</h2>
+    <p>Manage your orders and explore fresh dairy products.</p>
+    <p style="font-size:14px; margin-top:4px; color:#64748b;">{{ email }}</p>
 
-    <h2>Welcome, {{ name }}! 👋</h2>
+    <div class="hero-actions">
+        <a href="/products" class="btn">🥛 Order Fresh Milk</a>
+        <a href="/my-orders" class="btn btn-outline">📦 My Orders</a>
+    </div>
+</div>
 
-    <p>Welcome to your Milk Chacha Dashboard.</p>
+<div class="stats-row">
+    <div class="stat-card">
+        <div class="stat-num">{{ total_orders }}</div>
+        <div class="stat-label">Total Orders</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-num">3</div>
+        <div class="stat-label">Products Available</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-num">🥛</div>
+        <div class="stat-label">Daily Delivery</div>
+    </div>
+</div>
 
-    <p>Email: {{ email }}</p>
+<div class="section-header">
+    <h2>Quick Order</h2>
+    <p>Pick a product and place your order instantly</p>
+</div>
 
+<div class="products">
 
-    <div style="margin-top: 25px;">
+    <div class="product-card">
+        <span class="product-icon">🥛</span>
+        <h3>Fresh Cow Milk</h3>
+        <p>Pure farm-fresh cow milk for daily use.</p>
+        <div class="price-tag">₹60 <span>/ Liter</span></div>
+        <a href="/order?product=Fresh%20Cow%20Milk&price=60" class="btn">Order Now</a>
+    </div>
 
-        <a href="/products" class="btn">
-            🥛 Order Fresh Milk
-        </a>
+    <div class="product-card">
+        <span class="product-icon">🐃</span>
+        <h3>Buffalo Milk</h3>
+        <p>Rich & creamy buffalo milk — high fat content.</p>
+        <div class="price-tag">₹70 <span>/ Liter</span></div>
+        <a href="/order?product=Buffalo%20Milk&price=70" class="btn">Order Now</a>
+    </div>
 
-        <a href="/my-orders" class="btn">
-            📦 My Orders
-        </a>
+    <div class="product-card">
+        <span class="product-icon">🥣</span>
+        <h3>Fresh Curd</h3>
+        <p>Thick, creamy curd set naturally every morning.</p>
+        <div class="price-tag">₹50 <span>/ Kg</span></div>
+        <a href="/order?product=Fresh%20Curd&price=50" class="btn">Order Now</a>
+    </div>
 
+    <div class="product-card">
+        <span class="product-icon">🥛</span>
+        <h3>Lassi</h3>
+        <p>Chilled fresh lassi — sweet or salted.</p>
+        <div class="price-tag">₹40 <span>/ 300ml</span></div>
+        <a href="/order?product=Lassi&price=40" class="btn">Order Now</a>
+    </div>
+
+    <div class="product-card">
+        <span class="product-icon">🧀</span>
+        <h3>Fresh Paneer</h3>
+        <p>Soft homemade-style paneer from pure milk.</p>
+        <div class="price-tag">₹300 <span>/ Kg</span></div>
+        <a href="/order?product=Fresh%20Paneer&price=300" class="btn">Order Now</a>
+    </div>
+
+    <div class="product-card">
+        <span class="product-icon">🍯</span>
+        <h3>Pure Ghee</h3>
+        <p>Bilona churned desi ghee — pure & aromatic.</p>
+        <div class="price-tag">₹700 <span>/ 500g</span></div>
+        <a href="/order?product=Pure%20Ghee&price=700" class="btn">Order Now</a>
     </div>
 
 </div>

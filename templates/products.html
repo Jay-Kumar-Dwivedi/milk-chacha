@@ -3,88 +3,508 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Products - Milk Chacha</title>
-
-    <link rel="stylesheet"
-          href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
-
 <body>
 
 <header>
-    <h1>🥛 Milk Chacha</h1>
-
+    <a href="/" class="logo">🥛 Milk Chacha</a>
     <nav>
         <a href="/dashboard">Dashboard</a>
-        <a href="/products">Products</a>
-        <a href="/logout">Logout</a>
+        <a href="/cart" class="cart-link">
+            🛒 Cart
+            {% if cart_count > 0 %}<span class="cart-badge">{{ cart_count }}</span>{% endif %}
+        </a>
+        <a href="/my-orders">My Orders</a>
+        <a href="/logout" class="logout-link">Logout</a>
     </nav>
 </header>
 
-
 <div class="hero">
-
     <h2>Our Fresh Products 🥛</h2>
-
-    <p>Choose fresh and quality dairy products.</p>
-
+    <p>Choose from our premium dairy range — made fresh daily.</p>
+    <div class="hero-badges">
+        <span class="badge">🌿 Farm Fresh</span>
+        <span class="badge">🚚 Daily Delivery</span>
+        <span class="badge">✅ Quality Assured</span>
+        <span class="badge">🧪 Lab Tested</span>
+    </div>
 </div>
 
-
+<!-- ===== MILK VARIETIES ===== -->
+<div class="section-header">
+    <h2>🥛 Milk Varieties</h2>
+    <p>Pure, fresh milk in every form</p>
+</div>
 <div class="products">
 
-    <!-- Fresh Milk -->
     <div class="product-card">
-
-        <h3>🥛 Fresh Milk</h3>
-
-        <p>Pure and fresh milk.</p>
-
-        <h4>₹60 / Liter</h4>
-
-        <a href="/order?product=Fresh%20Milk&price=60"
-           class="btn">
-            Order Now
-        </a>
-
+        <span class="product-icon">🥛</span>
+        <h3>Fresh Cow Milk</h3>
+        <p>Pure farm-fresh cow milk sourced daily from local farms.</p>
+        <div class="price-tag">₹60 <span>/ Liter</span></div>
+        <div class="card-actions">
+            <button class="btn btn-info" onclick="openModal('cow-milk')">ℹ️ Know More</button>
+            <a href="/order?product=Fresh%20Cow%20Milk&price=60" class="btn">Order Now</a>
+        </div>
+        <form action="/cart/add" method="POST" style="margin-top:8px;">
+            <input type="hidden" name="product_name" value="Fresh Cow Milk">
+            <input type="hidden" name="price" value="60">
+            <button type="submit" class="btn btn-success" style="width:100%;justify-content:center;">🛒 Add to Cart</button>
+        </form>
     </div>
 
-
-    <!-- Curd -->
     <div class="product-card">
-
-        <h3>🥣 Curd</h3>
-
-        <p>Fresh and healthy curd.</p>
-
-        <h4>₹50 / Kg</h4>
-
-        <a href="/order?product=Curd&price=50"
-           class="btn">
-            Order Now
-        </a>
-
+        <span class="product-icon">🐃</span>
+        <h3>Buffalo Milk</h3>
+        <p>Rich & creamy buffalo milk — high fat, great taste.</p>
+        <div class="price-tag">₹70 <span>/ Liter</span></div>
+        <div class="card-actions">
+            <button class="btn btn-info" onclick="openModal('buffalo-milk')">ℹ️ Know More</button>
+            <a href="/order?product=Buffalo%20Milk&price=70" class="btn">Order Now</a>
+        </div>
+        <form action="/cart/add" method="POST" style="margin-top:8px;">
+            <input type="hidden" name="product_name" value="Buffalo Milk">
+            <input type="hidden" name="price" value="70">
+            <button type="submit" class="btn btn-success" style="width:100%;justify-content:center;">🛒 Add to Cart</button>
+        </form>
     </div>
 
-
-    <!-- Paneer -->
     <div class="product-card">
+        <span class="product-icon">🥤</span>
+        <h3>Toned Milk</h3>
+        <p>Low-fat toned milk — ideal for health-conscious families.</p>
+        <div class="price-tag">₹50 <span>/ Liter</span></div>
+        <div class="card-actions">
+            <button class="btn btn-info" onclick="openModal('toned-milk')">ℹ️ Know More</button>
+            <a href="/order?product=Toned%20Milk&price=50" class="btn">Order Now</a>
+        </div>
+        <form action="/cart/add" method="POST" style="margin-top:8px;">
+            <input type="hidden" name="product_name" value="Toned Milk">
+            <input type="hidden" name="price" value="50">
+            <button type="submit" class="btn btn-success" style="width:100%;justify-content:center;">🛒 Add to Cart</button>
+        </form>
+    </div>
 
-        <h3>🧀 Paneer</h3>
-
-        <p>Fresh homemade-style paneer.</p>
-
-        <h4>₹300 / Kg</h4>
-
-        <a href="/order?product=Paneer&price=300"
-           class="btn">
-            Order Now
-        </a>
-
+    <div class="product-card">
+        <span class="product-icon">🍫</span>
+        <h3>Chocolate Milk</h3>
+        <p>Kids' favourite — fresh milk blended with cocoa goodness.</p>
+        <div class="price-tag">₹80 <span>/ 500ml</span></div>
+        <div class="card-actions">
+            <button class="btn btn-info" onclick="openModal('choco-milk')">ℹ️ Know More</button>
+            <a href="/order?product=Chocolate%20Milk&price=80" class="btn">Order Now</a>
+        </div>
+        <form action="/cart/add" method="POST" style="margin-top:8px;">
+            <input type="hidden" name="product_name" value="Chocolate Milk">
+            <input type="hidden" name="price" value="80">
+            <button type="submit" class="btn btn-success" style="width:100%;justify-content:center;">🛒 Add to Cart</button>
+        </form>
     </div>
 
 </div>
+
+<!-- ===== CURD & DRINKS ===== -->
+<div class="section-header">
+    <h2>🥣 Curd & Drinks</h2>
+    <p>Probiotic-rich, naturally fermented goodness</p>
+</div>
+<div class="products">
+
+    <div class="product-card">
+        <span class="product-icon">🥣</span>
+        <h3>Fresh Curd</h3>
+        <p>Thick, creamy curd — naturally set every morning.</p>
+        <div class="price-tag">₹50 <span>/ Kg</span></div>
+        <div class="card-actions">
+            <button class="btn btn-info" onclick="openModal('curd')">ℹ️ Know More</button>
+            <a href="/order?product=Fresh%20Curd&price=50" class="btn">Order Now</a>
+        </div>
+        <form action="/cart/add" method="POST" style="margin-top:8px;">
+            <input type="hidden" name="product_name" value="Fresh Curd">
+            <input type="hidden" name="price" value="50">
+            <button type="submit" class="btn btn-success" style="width:100%;justify-content:center;">🛒 Add to Cart</button>
+        </form>
+    </div>
+
+    <div class="product-card">
+        <span class="product-icon">🫙</span>
+        <h3>Mishti Doi</h3>
+        <p>Bengali sweet curd — mildly sweetened, traditionally set.</p>
+        <div class="price-tag">₹60 <span>/ 400g</span></div>
+        <div class="card-actions">
+            <button class="btn btn-info" onclick="openModal('mishti-doi')">ℹ️ Know More</button>
+            <a href="/order?product=Mishti%20Doi&price=60" class="btn">Order Now</a>
+        </div>
+        <form action="/cart/add" method="POST" style="margin-top:8px;">
+            <input type="hidden" name="product_name" value="Mishti Doi">
+            <input type="hidden" name="price" value="60">
+            <button type="submit" class="btn btn-success" style="width:100%;justify-content:center;">🛒 Add to Cart</button>
+        </form>
+    </div>
+
+    <div class="product-card">
+        <span class="product-icon">🥛</span>
+        <h3>Lassi</h3>
+        <p>Chilled fresh lassi — sweet or salted as you like.</p>
+        <div class="price-tag">₹40 <span>/ 300ml</span></div>
+        <div class="card-actions">
+            <button class="btn btn-info" onclick="openModal('lassi')">ℹ️ Know More</button>
+            <a href="/order?product=Lassi&price=40" class="btn">Order Now</a>
+        </div>
+        <form action="/cart/add" method="POST" style="margin-top:8px;">
+            <input type="hidden" name="product_name" value="Lassi">
+            <input type="hidden" name="price" value="40">
+            <button type="submit" class="btn btn-success" style="width:100%;justify-content:center;">🛒 Add to Cart</button>
+        </form>
+    </div>
+
+    <div class="product-card">
+        <span class="product-icon">🧃</span>
+        <h3>Buttermilk (Chaach)</h3>
+        <p>Cool & refreshing chaach with jeera and mint.</p>
+        <div class="price-tag">₹20 <span>/ 200ml</span></div>
+        <div class="card-actions">
+            <button class="btn btn-info" onclick="openModal('chaach')">ℹ️ Know More</button>
+            <a href="/order?product=Buttermilk&price=20" class="btn">Order Now</a>
+        </div>
+        <form action="/cart/add" method="POST" style="margin-top:8px;">
+            <input type="hidden" name="product_name" value="Buttermilk">
+            <input type="hidden" name="price" value="20">
+            <button type="submit" class="btn btn-success" style="width:100%;justify-content:center;">🛒 Add to Cart</button>
+        </form>
+    </div>
+
+</div>
+
+<!-- ===== PANEER, CREAM & MORE ===== -->
+<div class="section-header">
+    <h2>🧀 Paneer, Cream & More</h2>
+    <p>Premium dairy products for your kitchen</p>
+</div>
+<div class="products">
+
+    <div class="product-card">
+        <span class="product-icon">🧀</span>
+        <h3>Fresh Paneer</h3>
+        <p>Soft homemade-style paneer made from pure buffalo milk.</p>
+        <div class="price-tag">₹300 <span>/ Kg</span></div>
+        <div class="card-actions">
+            <button class="btn btn-info" onclick="openModal('paneer')">ℹ️ Know More</button>
+            <a href="/order?product=Fresh%20Paneer&price=300" class="btn">Order Now</a>
+        </div>
+        <form action="/cart/add" method="POST" style="margin-top:8px;">
+            <input type="hidden" name="product_name" value="Fresh Paneer">
+            <input type="hidden" name="price" value="300">
+            <button type="submit" class="btn btn-success" style="width:100%;justify-content:center;">🛒 Add to Cart</button>
+        </form>
+    </div>
+
+    <div class="product-card">
+        <span class="product-icon">🧈</span>
+        <h3>Fresh Butter</h3>
+        <p>Creamy white butter — churned fresh from pure cream.</p>
+        <div class="price-tag">₹480 <span>/ Kg</span></div>
+        <div class="card-actions">
+            <button class="btn btn-info" onclick="openModal('butter')">ℹ️ Know More</button>
+            <a href="/order?product=Fresh%20Butter&price=480" class="btn">Order Now</a>
+        </div>
+        <form action="/cart/add" method="POST" style="margin-top:8px;">
+            <input type="hidden" name="product_name" value="Fresh Butter">
+            <input type="hidden" name="price" value="480">
+            <button type="submit" class="btn btn-success" style="width:100%;justify-content:center;">🛒 Add to Cart</button>
+        </form>
+    </div>
+
+    <div class="product-card">
+        <span class="product-icon">🍯</span>
+        <h3>Pure Ghee</h3>
+        <p>Hand-crafted desi ghee made from bilona churned butter.</p>
+        <div class="price-tag">₹700 <span>/ 500g</span></div>
+        <div class="card-actions">
+            <button class="btn btn-info" onclick="openModal('ghee')">ℹ️ Know More</button>
+            <a href="/order?product=Pure%20Ghee&price=700" class="btn">Order Now</a>
+        </div>
+        <form action="/cart/add" method="POST" style="margin-top:8px;">
+            <input type="hidden" name="product_name" value="Pure Ghee">
+            <input type="hidden" name="price" value="700">
+            <button type="submit" class="btn btn-success" style="width:100%;justify-content:center;">🛒 Add to Cart</button>
+        </form>
+    </div>
+
+    <div class="product-card">
+        <span class="product-icon">🍦</span>
+        <h3>Fresh Cream</h3>
+        <p>Rich fresh cream — perfect for cooking & desserts.</p>
+        <div class="price-tag">₹120 <span>/ 200ml</span></div>
+        <div class="card-actions">
+            <button class="btn btn-info" onclick="openModal('cream')">ℹ️ Know More</button>
+            <a href="/order?product=Fresh%20Cream&price=120" class="btn">Order Now</a>
+        </div>
+        <form action="/cart/add" method="POST" style="margin-top:8px;">
+            <input type="hidden" name="product_name" value="Fresh Cream">
+            <input type="hidden" name="price" value="120">
+            <button type="submit" class="btn btn-success" style="width:100%;justify-content:center;">🛒 Add to Cart</button>
+        </form>
+    </div>
+
+    <div class="product-card">
+        <span class="product-icon">🍮</span>
+        <h3>Khoya (Mawa)</h3>
+        <p>Fresh mawa — ideal for mithai, halwa & festive sweets.</p>
+        <div class="price-tag">₹400 <span>/ Kg</span></div>
+        <div class="card-actions">
+            <button class="btn btn-info" onclick="openModal('khoya')">ℹ️ Know More</button>
+            <a href="/order?product=Khoya%20Mawa&price=400" class="btn">Order Now</a>
+        </div>
+        <form action="/cart/add" method="POST" style="margin-top:8px;">
+            <input type="hidden" name="product_name" value="Khoya Mawa">
+            <input type="hidden" name="price" value="400">
+            <button type="submit" class="btn btn-success" style="width:100%;justify-content:center;">🛒 Add to Cart</button>
+        </form>
+    </div>
+
+    <div class="product-card">
+        <span class="product-icon">🥧</span>
+        <h3>Rabri</h3>
+        <p>Thick, saffron-flavoured rabri from slow-boiled milk.</p>
+        <div class="price-tag">₹150 <span>/ 250g</span></div>
+        <div class="card-actions">
+            <button class="btn btn-info" onclick="openModal('rabri')">ℹ️ Know More</button>
+            <a href="/order?product=Rabri&price=150" class="btn">Order Now</a>
+        </div>
+        <form action="/cart/add" method="POST" style="margin-top:8px;">
+            <input type="hidden" name="product_name" value="Rabri">
+            <input type="hidden" name="price" value="150">
+            <button type="submit" class="btn btn-success" style="width:100%;justify-content:center;">🛒 Add to Cart</button>
+        </form>
+    </div>
+
+</div>
+
+
+<!-- ===== MODAL OVERLAY ===== -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeOnBackdrop(event)">
+    <div class="modal-box" id="modalBox">
+        <button class="modal-close" onclick="closeModal()">✕</button>
+        <div class="modal-icon" id="mIcon"></div>
+        <div class="modal-title" id="mTitle"></div>
+        <div class="modal-price" id="mPrice"></div>
+        <div class="modal-desc"  id="mDesc"></div>
+        <div class="modal-facts">
+            <h4>📋 Quick Facts</h4>
+            <div id="mFacts"></div>
+        </div>
+        <div class="modal-actions" id="mActions"></div>
+    </div>
+</div>
+
+
+<script>
+const products = {
+    "cow-milk": {
+        icon: "🥛", name: "Fresh Cow Milk", price: "₹60 / Liter",
+        desc: "Our cow milk is sourced every morning from local farms and delivered directly to your door. It is rich in calcium, protein and essential vitamins — perfect for all ages.",
+        facts: [
+            ["💪", "High in Calcium & Vitamin D — strengthens bones"],
+            ["🧬", "Rich in Protein — 3.4g per 100ml"],
+            ["🌿", "No preservatives, no additives"],
+            ["🐄", "A2 cow milk — easier to digest"],
+            ["🕕", "Delivered fresh within 6 hours of milking"]
+        ],
+        order: "/order?product=Fresh%20Cow%20Milk&price=60"
+    },
+    "buffalo-milk": {
+        icon: "🐃", name: "Buffalo Milk", price: "₹70 / Liter",
+        desc: "Buffalo milk is thicker, creamier and richer than cow milk. Higher fat content makes it ideal for making paneer, curd and sweets at home.",
+        facts: [
+            ["🥛", "Fat content: 7–8% (double that of cow milk)"],
+            ["💪", "Higher Calcium — great for growing children"],
+            ["🍮", "Best for making paneer, curd & khoya"],
+            ["❄️", "Stays fresh longer due to higher fat"],
+            ["🌾", "Sourced from farm-raised buffalo"]
+        ],
+        order: "/order?product=Buffalo%20Milk&price=70"
+    },
+    "toned-milk": {
+        icon: "🥤", name: "Toned Milk", price: "₹50 / Liter",
+        desc: "Toned milk is cow milk mixed with skimmed milk powder to reduce fat while retaining nutrition. Perfect for weight-conscious individuals and kids' daily use.",
+        facts: [
+            ["⚖️", "Low fat: only 3% — ideal for diet"],
+            ["🧬", "Same protein & calcium as full-fat milk"],
+            ["🩺", "Recommended by nutritionists for daily use"],
+            ["💧", "Light & easy to digest"],
+            ["🧒", "Great for children's school tiffin"]
+        ],
+        order: "/order?product=Toned%20Milk&price=50"
+    },
+    "choco-milk": {
+        icon: "🍫", name: "Chocolate Milk", price: "₹80 / 500ml",
+        desc: "A delicious blend of fresh cow milk and natural cocoa powder — no artificial flavours. Kids love it and it is a great post-school energy drink.",
+        facts: [
+            ["🍫", "Made with natural cocoa, no artificial flavour"],
+            ["🥛", "Full nutrition of fresh milk retained"],
+            ["⚡", "Quick energy boost after school/sports"],
+            ["🧒", "Kids favourite — tasty & healthy"],
+            ["🚫", "No added preservatives"]
+        ],
+        order: "/order?product=Chocolate%20Milk&price=80"
+    },
+    "curd": {
+        icon: "🥣", name: "Fresh Curd", price: "₹50 / Kg",
+        desc: "Our curd is set fresh overnight using natural culture. It is thick, creamy and packed with probiotics — great for gut health and digestion.",
+        facts: [
+            ["🦠", "Rich in Probiotics — improves digestion"],
+            ["💪", "High Calcium & Protein"],
+            ["🌡️", "Set naturally, no artificial culture"],
+            ["🍚", "Perfect with rice, roti, paratha"],
+            ["❄️", "Stays fresh up to 3 days when refrigerated"]
+        ],
+        order: "/order?product=Fresh%20Curd&price=50"
+    },
+    "mishti-doi": {
+        icon: "🫙", name: "Mishti Doi", price: "₹60 / 400g",
+        desc: "Mishti Doi is the famous Bengali sweet curd — set in an earthen pot with jaggery or sugar. Mild, sweet and absolutely delicious as a dessert.",
+        facts: [
+            ["🍯", "Sweetened with jaggery or cane sugar"],
+            ["🏺", "Traditionally set in clay/earthen pots"],
+            ["🎉", "Popular at festivals & celebrations"],
+            ["🦠", "Probiotic goodness with natural sweetness"],
+            ["🌸", "Origin: Bengal — authentic recipe"]
+        ],
+        order: "/order?product=Mishti%20Doi&price=60"
+    },
+    "lassi": {
+        icon: "🥛", name: "Lassi", price: "₹40 / 300ml",
+        desc: "Churned fresh from curd — available in sweet and salted variants. A classic Indian summer drink that cools the body and aids digestion.",
+        facts: [
+            ["🥛", "Made fresh from same-day curd"],
+            ["🌞", "Natural coolant — perfect for summers"],
+            ["🫁", "Aids digestion & reduces acidity"],
+            ["🍬", "Available: Sweet / Salted / Rose"],
+            ["⚡", "Instant energy, no artificial sugar"]
+        ],
+        order: "/order?product=Lassi&price=40"
+    },
+    "chaach": {
+        icon: "🧃", name: "Buttermilk (Chaach)", price: "₹20 / 200ml",
+        desc: "Thin, refreshing chaach made from fresh curd with a pinch of roasted jeera, black salt and mint. The perfect drink after a heavy meal.",
+        facts: [
+            ["🌿", "Flavoured with jeera, mint & black salt"],
+            ["🫁", "Best drink after meals — aids digestion"],
+            ["🌡️", "Reduces body heat naturally"],
+            ["💧", "Very low calorie — only 40 kcal/glass"],
+            ["🦠", "Probiotic — keeps gut healthy"]
+        ],
+        order: "/order?product=Buttermilk&price=20"
+    },
+    "paneer": {
+        icon: "🧀", name: "Fresh Paneer", price: "₹300 / Kg",
+        desc: "Our paneer is made fresh every morning by curdling pure buffalo milk with lemon juice. Soft, spongy and perfect for curries, tikkas and salads.",
+        facts: [
+            ["💪", "Very High Protein — 18g per 100g"],
+            ["🦴", "Rich in Calcium — great for bones"],
+            ["🍳", "Doesn't melt — holds shape while cooking"],
+            ["🌱", "100% vegetarian, no rennet used"],
+            ["🕕", "Made fresh daily — delivered same day"]
+        ],
+        order: "/order?product=Fresh%20Paneer&price=300"
+    },
+    "butter": {
+        icon: "🧈", name: "Fresh Butter", price: "₹480 / Kg",
+        desc: "White butter churned fresh from pure cream. No added salt or colour — just pure dairy goodness. Spread it on roti or use for cooking.",
+        facts: [
+            ["🌿", "Unsalted, no added colour or preservatives"],
+            ["🧈", "Churned from fresh cream — not processed"],
+            ["🍞", "Perfect on roti, toast & parathas"],
+            ["🔥", "High smoke point — safe for cooking"],
+            ["❄️", "Stays fresh for 7 days when refrigerated"]
+        ],
+        order: "/order?product=Fresh%20Butter&price=480"
+    },
+    "ghee": {
+        icon: "🍯", name: "Pure Ghee", price: "₹700 / 500g",
+        desc: "Bilona method desi ghee — curd is churned to extract butter, then slow-cooked to make ghee. The most nutritious and aromatic ghee you will ever taste.",
+        facts: [
+            ["🏆", "Bilona method — traditional hand-churned"],
+            ["🧬", "Rich in Omega-3, Vitamin A, D, E, K"],
+            ["🔥", "High smoke point — safest for cooking"],
+            ["💊", "Boosts immunity & improves digestion"],
+            ["🌾", "Made from desi cow curd only"]
+        ],
+        order: "/order?product=Pure%20Ghee&price=700"
+    },
+    "cream": {
+        icon: "🍦", name: "Fresh Cream", price: "₹120 / 200ml",
+        desc: "Thick fresh cream skimmed from full-fat buffalo milk. Use it in gravies, desserts, coffee or as a base for homemade butter and ice cream.",
+        facts: [
+            ["🍮", "Fat content: 25% — rich & thick"],
+            ["☕", "Perfect in coffee, pasta & gravies"],
+            ["🍨", "Great base for homemade ice cream"],
+            ["🌿", "No stabilisers or thickeners added"],
+            ["❄️", "Use within 3 days of opening"]
+        ],
+        order: "/order?product=Fresh%20Cream&price=120"
+    },
+    "khoya": {
+        icon: "🍮", name: "Khoya (Mawa)", price: "₹400 / Kg",
+        desc: "Khoya is made by slowly simmering full-fat buffalo milk until almost all moisture evaporates. It is the base ingredient for gulab jamun, barfi and most Indian sweets.",
+        facts: [
+            ["🍬", "Key ingredient in gulab jamun, barfi, halwa"],
+            ["🐃", "Made from 100% buffalo milk"],
+            ["🔥", "Slow-cooked for 4–5 hours for rich flavour"],
+            ["💪", "Very high protein & fat — energy dense"],
+            ["🎉", "Most in demand during festivals"]
+        ],
+        order: "/order?product=Khoya%20Mawa&price=400"
+    },
+    "rabri": {
+        icon: "🥧", name: "Rabri", price: "₹150 / 250g",
+        desc: "Rabri is thickened sweetened milk cooked slowly until it becomes dense and layered. Flavoured with saffron, cardamom and rose water — a royal Indian dessert.",
+        facts: [
+            ["🌸", "Flavoured with saffron, elaichi & rose water"],
+            ["👑", "Royal Mughal-era dessert — authentic recipe"],
+            ["🥛", "Made from 2 litres of milk per 250g"],
+            ["🍮", "Serve chilled with jalebi or alone"],
+            ["🎉", "Best for celebrations & special occasions"]
+        ],
+        order: "/order?product=Rabri&price=150"
+    }
+};
+
+function openModal(id) {
+    const p = products[id];
+    document.getElementById('mIcon').textContent  = p.icon;
+    document.getElementById('mTitle').textContent = p.name;
+    document.getElementById('mPrice').textContent = p.price;
+    document.getElementById('mDesc').textContent  = p.desc;
+
+    let factsHTML = '';
+    p.facts.forEach(f => {
+        factsHTML += `<div class="modal-fact-row"><span class="fact-icon">${f[0]}</span><span>${f[1]}</span></div>`;
+    });
+    document.getElementById('mFacts').innerHTML = factsHTML;
+
+    document.getElementById('mActions').innerHTML =
+        `<a href="${p.order}" class="btn btn-success">🛒 Order Now</a>
+         <button class="btn btn-info" onclick="closeModal()">✕ Close</button>`;
+
+    document.getElementById('modalOverlay').classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+    document.getElementById('modalOverlay').classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+function closeOnBackdrop(e) {
+    if (e.target === document.getElementById('modalOverlay')) closeModal();
+}
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+</script>
 
 </body>
 </html>

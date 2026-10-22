@@ -3,18 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Milk Chacha - Fresh Dairy</title>
-
-    <link rel="stylesheet"
-          href="{{ url_for('static', filename='css/style.css') }}">
+    <title>Milk Chacha - Fresh Dairy Delivered</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
-
 <body>
 
 <header>
-    <h1>🥛 Milk Chacha</h1>
-
+    <a href="/" class="logo">🥛 Milk Chacha</a>
     <nav>
         <a href="/">Home</a>
         <a href="/login">Login</a>
@@ -22,45 +17,77 @@
     </nav>
 </header>
 
-
 <div class="hero">
+    <h2>Fresh Dairy at Your Doorstep 🥛</h2>
+    <p>Pure milk, creamy curd, and fresh paneer — delivered daily to your home.</p>
 
-    <h2>Welcome to Milk Chacha 🥛</h2>
-
-    <p>
-        Fresh and quality dairy products delivered to you.
-    </p>
-
-    <div style="margin-top: 25px;">
-
-        <a href="/products" class="btn">
-            🥛 Explore Products
-        </a>
-
-        <a href="/register" class="btn">
-            👤 Create Account
-        </a>
-
+    <div class="hero-badges">
+        <span class="badge">✅ 100% Pure</span>
+        <span class="badge">🚚 Daily Delivery</span>
+        <span class="badge">🌿 Farm Fresh</span>
+        <span class="badge">💯 Quality Assured</span>
     </div>
 
+    <div class="hero-actions">
+        <a href="/products" class="btn">🥛 Explore Products</a>
+        <a href="/register" class="btn btn-outline">👤 Create Account</a>
+    </div>
 </div>
 
+
+<div class="section-header">
+    <h2>Our Popular Products</h2>
+    <p>Made fresh every morning, delivered with love</p>
+</div>
 
 <div class="products">
 
     <div class="product-card">
-        <h3>🥛 Fresh Milk</h3>
-        <p>Pure and fresh milk for your family.</p>
+        <span class="product-icon">🥛</span>
+        <h3>Fresh Cow Milk</h3>
+        <p>Pure farm-fresh cow milk for your family's daily needs.</p>
+        <div class="price-tag">₹60 <span>/ Liter</span></div>
+        <a href="/login" class="btn">Order Now</a>
     </div>
 
     <div class="product-card">
-        <h3>🥣 Fresh Curd</h3>
-        <p>Healthy and delicious curd.</p>
+        <span class="product-icon">🐃</span>
+        <h3>Buffalo Milk</h3>
+        <p>Rich & creamy buffalo milk — high fat, great taste.</p>
+        <div class="price-tag">₹70 <span>/ Liter</span></div>
+        <a href="/login" class="btn">Order Now</a>
     </div>
 
     <div class="product-card">
-        <h3>🧀 Fresh Paneer</h3>
-        <p>Quality paneer made from fresh milk.</p>
+        <span class="product-icon">🥣</span>
+        <h3>Fresh Curd</h3>
+        <p>Thick, creamy curd set naturally every morning.</p>
+        <div class="price-tag">₹50 <span>/ Kg</span></div>
+        <a href="/login" class="btn">Order Now</a>
+    </div>
+
+    <div class="product-card">
+        <span class="product-icon">🍯</span>
+        <h3>Pure Ghee</h3>
+        <p>Hand-crafted desi ghee from bilona churned butter.</p>
+        <div class="price-tag">₹700 <span>/ 500g</span></div>
+        <a href="/login" class="btn">Order Now</a>
+    </div>
+
+    <div class="product-card">
+        <span class="product-icon">🧀</span>
+        <h3>Fresh Paneer</h3>
+        <p>Soft homemade-style paneer from pure buffalo milk.</p>
+        <div class="price-tag">₹300 <span>/ Kg</span></div>
+        <a href="/login" class="btn">Order Now</a>
+    </div>
+
+    <div class="product-card">
+        <span class="product-icon">🧈</span>
+        <h3>Fresh Butter</h3>
+        <p>Creamy white butter churned fresh from pure cream.</p>
+        <div class="price-tag">₹480 <span>/ Kg</span></div>
+        <a href="/login" class="btn">Order Now</a>
     </div>
 
 </div>
